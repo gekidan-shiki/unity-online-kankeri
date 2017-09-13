@@ -48,14 +48,14 @@ public class PlayerScript : Photon.MonoBehaviour {
 		gs = this.gameObject.GetComponent<GameStartScript> ();
 		pv = this.gameObject.GetComponent<PhotonView> ();
 		//オブジェクト系の取得
-		playerSprite = this.transform.Find ("sprite").transform.gameObject;
-		playerRotationTaget = this.transform.Find ("rotationTarget").transform.gameObject;
-		//ObjectSCriptの登録
+		//playerSprite = this.transform.Find ("sprite").transform.gameObject;
+		//playerRotationTaget = this.transform.Find ("rotationTarget").transform.gameObject;
+		//ObjectScriptの登録
 		this.GetComponent<ObjectScript> ().thisObject = "player";
 		this.GetComponent<ObjectScript> ().ownerId = this.GetComponent<PhotonView> ().ownerId;
 
 		//名前を表示する
-		this.transform.Find ("3DText").gameObject.GetComponent<TextMesh> ().text = pv.owner.name;
+		//this.transform.Find ("3DText").gameObject.GetComponent<TextMesh> ().text = pv.owner.name;
 	}
 
 	//photonによる座標の同期
@@ -72,8 +72,8 @@ public class PlayerScript : Photon.MonoBehaviour {
 
 	void SyncVariables ()
 	{
-		st.hp = currentHp;
-		st.maxhp = currentMaxHp;
+		//st.hp = currentHp;
+		//st.maxhp = currentMaxHp;
 	}
 
 	void Update ()
@@ -82,11 +82,7 @@ public class PlayerScript : Photon.MonoBehaviour {
 		if (!photonView.isMine) {
 			//photonで値を同期
 			SyncVariables ();
-
-			//自分のview以外のオブジェクトをプレイヤーを回転させる
-			//pc.RotateRotationTarget (playerSprite, transform.position - lastPos);
 			lastPos = transform.position;
-			//pc.RotateSmoothly (playerSprite, playerRotationTaget, 10);
 		}
 	}
 	void setActiveOn ()

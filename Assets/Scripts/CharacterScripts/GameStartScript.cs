@@ -10,7 +10,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 	// team決め
 	public bool myPlayerFlag;
 	public bool teamDecided;
-	public string teamColor;
+	public string teamSide;
 	private string teamporaryTeamColor;
 
 	//player用画像
@@ -29,7 +29,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	void start () {
 		ps = this.gameObject.GetComponent<PlayerScript> ();
-		teamColor = "none";
+		teamSide = "none";
 		canvas = GameObject.Find ("Canvas");
 	}
 
@@ -37,7 +37,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
 		if (stream.isWriting) {
 			stream.SendNext (teamDecided);
-			stream.SendNext (teamColor);
+			stream.SendNext (teamSide);
 			stream.SendNext (spriteNum);
 		} else {
 			currentTeamDecided = (bool)stream.ReceiveNext ();
@@ -48,7 +48,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	void SyncVariables () {
 		teamDecided = currentTeamDecided;
-		teamColor = currentTeamColor;
+		teamSide = currentTeamColor;
 		spriteNum = currentSpriteNum;
 	}
 
@@ -65,11 +65,11 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	public void TeamDecided () {
 		teamDecided = true;
-		teamColor = teamporaryTeamColor;
-		if (teamColor == "red") {
+		teamSide = teamporaryTeamColor;
+		if (teamSide == "red") {
 			spriteNum = 1;
 			mySprite.sprite = playerColorSprite [spriteNum];
-		} else if (teamColor == "blue") {
+		} else if (teamSide == "blue") {
 			spriteNum = 2;
 			mySprite.sprite = playerColorSprite [spriteNum];
 		}
@@ -94,9 +94,9 @@ public class GameStartScript : Photon.MonoBehaviour {
 		int redTeamPlayerCount = 0;
 		int blueTeamPlayerCount = 0;
 		for (int i = 0; i < players.Length; i++) {
-			if (players [i].GetComponent<GameStartScript> ().teamColor == "red") {
+			if (players [i].GetComponent<GameStartScript> ().teamSide == "red") {
 				redTeamPlayerCount++;
-			} else if (players [i].GetComponent<GameStartScript> ().teamColor == "blue") {
+			} else if (players [i].GetComponent<GameStartScript> ().teamSide == "blue") {
 				blueTeamPlayerCount++;
 			}
 		}
@@ -123,8 +123,6 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 
 	//ゲーム開始の処理
-	//friendTargetはphotonPrefabからそれぞれのデバイスでSpawnする
-	//friendはデバイス間での同期はしないので、一つ一つのデバイスで人数分spawnする
 	[PunRPC]
 	public void gameStart ()
 	{
@@ -141,9 +139,9 @@ public class GameStartScript : Photon.MonoBehaviour {
 			otherViews [i] = otherPlayers [i].GetComponent<PhotonView> ();
 			//すべてのviewのオブジェクトに
 			//tagの割り当てをする
-			if (otherPlayers [i].GetComponent<GameStartScript> ().teamColor == "red") {
+			if (otherPlayers [i].GetComponent<GameStartScript> ().teamSide == "red") {
 				otherPlayers [i].tag = "red";
-			} else if (otherPlayers [i].GetComponent<GameStartScript> ().teamColor == "blue") {
+			} else if (otherPlayers [i].GetComponent<GameStartScript> ().teamSide == "blue") {
 				otherPlayers [i].tag = "blue";
 			}
 
@@ -151,7 +149,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 			//playerの初期位置へ移動し、friendTargetとfriendをspawnする
 			if (otherViews [i].ownerId == myPhotonView.ownerId) {
 				//tagの割り当て& FriendTaregtをSpawnする
-				MoveToStartPosition (otherPlayers [i].GetComponent<GameStartScript> ().teamColor);
+				MoveToStartPosition (otherPlayers [i].GetComponent<GameStartScript> ().teamSide);
 			} else {
 				//その他viewだったら
 			}
