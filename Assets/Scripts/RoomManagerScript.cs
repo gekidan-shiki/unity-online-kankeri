@@ -93,7 +93,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		myPlayer = PhotonNetwork.Instantiate ("Player", transform.position, Quaternion.identity, 0);
 		//RespawnScript.CharacterDataAdd (myPlayer, "Player_Level1");
 		// 初期位置を与える
-		myPlayer.transform.position = waitingSpawnPoint.transform.position;
+		myPlayer.transform.position = new Vector3 (1, 0, 1);
 		// joystick情報を与える。
 		PlayerController pc = myPlayer.GetComponent<PlayerController> ();
 		// 自分のViewを取得
