@@ -17,11 +17,16 @@ public class PlayerScript : Photon.MonoBehaviour {
 	public PhotonView pv;
 
 	//オブジェクト系
-	GameObject playerSprite;
-	GameObject playerRotationTaget;
-
+	// playerが鬼か人間かをGSから受け取る
+	// Human側のPlayerが鬼に見つかっているか
+	public string myPlayerSide;
+	public bool myPlayerBeFound;
 
 	Vector3 lastPos;
+
+	// Photon同期用
+	public string currentMyPlayerSide;
+	public bool currentMyPlayerBeFound;
 
 
 	void Awake () {
@@ -45,17 +50,28 @@ public class PlayerScript : Photon.MonoBehaviour {
 		//ObjectScriptの登録
 		this.GetComponent<ObjectScript> ().thisObject = "player";
 		this.GetComponent<ObjectScript> ().ownerId = this.GetComponent<PhotonView> ().ownerId;
+
+		myPlayerSide = gs.playerSide;
+		if (myPlayerSide == "Human") {
+			myPlayerBeFound = false;
+		}
 	}
 
 	//photonによる座標の同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info)
-	{
-		
+	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
+		if (stream.isWriting) {
+			stream.SendNext (myPlayerSide);
+			stream.SendNext (myPlayerBeFound);
+		} else {
+			currentMyPlayerSide = (string)stream.ReceiveNext ();
+			currentMyPlayerBeFound = (bool)stream.ReceiveNext ();
+		}
 	}
 
-	void SyncVariables ()
-	{
-		
+	// 変数を同期する
+	void SyncVariables () {
+		myPlayerSide = currentMyPlayerSide;
+		myPlayerBeFound = currentMyPlayerBeFound;
 	}
 
 	void Update ()

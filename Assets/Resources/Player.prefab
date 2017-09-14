@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114275603442692236}
   - component: {fileID: 54023491640688106}
   - component: {fileID: 114522555433596806}
+  - component: {fileID: 114390558388020388}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -196,8 +197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dded40427b918412597a2579857443b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  goForwardSpeed: 5
+  goSideSpeed: 3
   demonSpeed: 10
+  goSideRotation: 90
+  goBackRotation: 120
   isPlayerDemon: 0
 --- !u!114 &114275603442692236
 MonoBehaviour:
@@ -214,8 +218,18 @@ MonoBehaviour:
   rps: {fileID: 0}
   st: {fileID: 0}
   pv: {fileID: 114522555433596806}
-  currentHp: 0
-  currentMaxHp: 0
+  myPlayerSide: 
+--- !u!114 &114390558388020388
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213772284173940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81390ce8e42144bb3a7dec53ce4be61a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114449604092247256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,17 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPlayerFlag: 0
-  teamDecided: 0
-  teamSide: 
-  playerColorSprite:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 75f1665eda7f84dfcaa13a2061c546d4, type: 3}
-  - {fileID: 21300000, guid: 3977ac508290145708984d556eae2cee, type: 3}
-  spriteNum: 0
-  mySprite: {fileID: 0}
-  currentTeamDecided: 0
-  currentTeamColor: 
-  currentSpriteNum: 0
+  playerSide: 
+  currentPlayerSide: 
 --- !u!114 &114522555433596806
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,11 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	// team決め
 	public bool myPlayerFlag;
+	// demonかhumanか
+	public string playerSide;
 
+	// Photon同期用
+	public string currentPlayerSide;
 
 	GameObject canvas;
 
@@ -21,24 +25,24 @@ public class GameStartScript : Photon.MonoBehaviour {
 	// Photonによる座標同期
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
 		if (stream.isWriting) {
-
+			stream.SendNext (playerSide);
 		} else {
-
+			currentPlayerSide = (string)stream.ReceiveNext ();
 		}
 	}
 
 	void SyncVariables () {
-
+		playerSide = currentPlayerSide;
 	}
 
 
 	void Update () {
-
+		if (!photonView.isMine) {
+			// Photonで値を同期
+			SyncVariables ();
+		}
 	}
 
-	public void TeamDecided () {
-
-	}
 
 	[PunRPC]
 	public void EnableStartButton (bool flg)
@@ -63,10 +67,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 		for (int i = 0; i < otherViews.Length; i++) {
 			otherViews [i] = otherPlayers [i].GetComponent<PhotonView> ();
 		}
-
-
-
-
+			
 		//startButtonを閉じる
 		GameObject.Find ("Canvas").transform.Find ("StartButton").gameObject.SetActive (false);
 		//全員のgamestartscriptをシャットオフ
