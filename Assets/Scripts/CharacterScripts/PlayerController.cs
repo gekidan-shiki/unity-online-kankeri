@@ -21,24 +21,19 @@ public class PlayerController : Photon.MonoBehaviour
 	void Update ()
 	{
 		if (photonView.isMine) {
-			// playerの動き
 			if (Input.GetKey ("up") == true) {
 				this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
 			}
 			if (Input.GetKey ("down") == true) {
 				this.transform.position -= this.transform.forward * goForwardSpeed * Time.deltaTime;
-				this.transform.Rotate (new Vector3 (0, goBackRotation * Time.deltaTime, 0));
 			}
 			if (Input.GetKey ("right") == true) {
-//				this.transform.position += this.transform.right * goSideSpeed * Time.deltaTime;
 				this.transform.Rotate (new Vector3 (0, goSideRotation * Time.deltaTime, 0));
 			}
 			if (Input.GetKey ("left") == true) {
-//				this.transform.position -= this.transform.right * goSideSpeed * Time.deltaTime;
 				this.transform.Rotate (new Vector3 (0, -goSideRotation * Time.deltaTime, 0));
 			}
 		}else{
-			
 
 		}
 	}
