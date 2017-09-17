@@ -44,8 +44,8 @@ public class PlayerScript : Photon.MonoBehaviour {
 	}
 
 	void Start () {
-		npm = GameObject.Find("GameManager").GetComponent<NetworkPlayManagerScript>();
-		rps = GameObject.Find("GameManager").GetComponent<RespawnScript>();
+		//npm = GameObject.Find("GameManager").GetComponent<NetworkPlayManagerScript>();
+		//rps = GameObject.Find("GameManager").GetComponent<RespawnScript>();
 		st = this.gameObject.GetComponent<StatusScript> ();
 		pc = this.GetComponent<PlayerController> ();
 		gs = this.gameObject.GetComponent<GameStartScript> ();

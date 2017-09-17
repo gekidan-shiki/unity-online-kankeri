@@ -14,6 +14,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	private bool connectFailed = false;
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
+	public GameObject gameManager;
 	// DemonはplayerWhoIsIt = 1のplayer
 	public int myPlayerId;
 
@@ -100,6 +101,11 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		// 自分のプレイヤーを生成
 		myPlayer = PhotonNetwork.Instantiate ("Player", startPositions[myPlayerId-1].position, Quaternion.identity, 0);
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
+
+		// MasterClientがGameManagerを生成する
+		if (PhotonNetwork.isMasterClient) {
+			gameManager = PhotonNetwork.Instantiate("GameManager", new Vector3 (0,0,0), Quaternion.identity, 0);
+		}
 
 //		// joystick情報を与える。
 //		PlayerController pc = myPlayer.GetComponent<PlayerController> ();
