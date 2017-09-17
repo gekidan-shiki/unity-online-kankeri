@@ -105,12 +105,10 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		// MasterClientがGameManagerを生成する
 		if (PhotonNetwork.isMasterClient) {
 			gameManager = PhotonNetwork.Instantiate("GameManager", new Vector3 (0,0,0), Quaternion.identity, 0);
+		}else{
+			gameManager = GameObject.Find("GameManager");
+			GameObject.Find("StartButton").SetActive(false);
 		}
-
-//		// joystick情報を与える。
-//		PlayerController pc = myPlayer.GetComponent<PlayerController> ();
-		// 自分のViewを取得
-//		myPlayer.GetComponent<GameStartScript> ().myPlayerFlag = true;
 	}
 
 	// 部屋作成に成功したときのコール
@@ -125,13 +123,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	}
 		
 	public void StartButtonFunc () {
-		// Playerタグのついたオブジェクトを一斉取得
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		// 他のviewのオブジェクトのviewを一斉に取得
-		PhotonView[] otherViews = new PhotonView[players.Length];
-		for (int i = 0; i < players.Length; i++) {
-			otherViews [i] = players [i].GetComponent<PhotonView> ();
-			otherViews [i].RPC ("gameStart", PhotonPlayer.Find (otherViews [i].ownerId));
-		}
+		gameManager.GetComponent<GameManager>().isPlaying = true;
+		GameObject.Find("StartButton").SetActive(false);
 	}
 }
