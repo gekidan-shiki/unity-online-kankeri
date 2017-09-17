@@ -54,9 +54,7 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	{
 		if (!PhotonNetwork.isMasterClient) {
 			if (gameManager == null) {
-				GameObject manager = GameObject.Find ("GameManager");
-				if (manager != null)
-					gameManager = manager.GetComponent<GameManager> ();
+				gameManager = GameObject.FindObjectOfType<GameManager>();
 			}
 		}
 	}

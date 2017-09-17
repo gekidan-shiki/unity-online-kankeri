@@ -11,7 +11,7 @@ public class PlayerController : Photon.MonoBehaviour
 	public float goSideRotation = 90;
 	public float goBackRotation = 120;
 	public bool isPlayerDemon;
-	GameManager gameManager;
+	public GameManager gameManager;
 
 	private bool isMovable;
 
@@ -19,15 +19,18 @@ public class PlayerController : Photon.MonoBehaviour
 	{
 		if (photonView.isMine) {
 			this.transform.Find ("PlayerCamera").gameObject.SetActive (true);
-			gameManager = GameObject.FindObjectOfType<RoomManagerScript>().gameManager;
 		}
 	}
 
 	void Update ()
 	{
 		if (photonView.isMine) {
-			isMovable = gameManager.isPlaying;
-			Move();
+			if (gameManager == null){
+				gameManager = GameObject.FindObjectOfType<GameManager> ();
+			}else{
+				isMovable = gameManager.isPlaying;
+			}
+			Move ();
 		} else {
 
 		}
