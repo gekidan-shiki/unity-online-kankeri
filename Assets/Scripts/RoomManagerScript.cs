@@ -14,6 +14,8 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	private bool connectFailed = false;
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
+	// DemonはplayerWhoIsIt = 1のplayer
+	public int playerWhoIsIt;
 
 	// waitRoomの座標をもつオブジェクト
 	public GameObject waitingSpawnPoint;
@@ -89,6 +91,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 			Debug.Log ((i).ToString () + " : " + playerArray[i].name + " ID = " + playerArray[i].ID);
 		}
 
+
 		// 自分のプレイヤーを生成
 		myPlayer = PhotonNetwork.Instantiate ("Player", transform.position, Quaternion.identity, 0);
 		//RespawnScript.CharacterDataAdd (myPlayer, "Player_Level1");
@@ -99,6 +102,9 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		// 自分のViewを取得
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
 		myPlayer.GetComponent<GameStartScript> ().myPlayerFlag = true;
+
+		playerWhoIsIt = PhotonNetwork.player.ID;
+		Debug.Log ("俺は" + playerWhoIsIt);
 	}
 
 	// 部屋作成に成功したときのコール
@@ -111,12 +117,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		this.connectFailed = true;
 		Debug.Log ("OnFailedToConnectToPhoton. StatusCode: " + parameters + " ServerAddress: " + PhotonNetwork.networkingPeer.ServerAddress);
 	}
-
-	public void teamDecideButtonFunc () {
-		myPlayer.GetComponent<GameStartScript> ().TeamDecided ();
-		teamDecideButton.gameObject.SetActive (false);
-	}
-
+		
 	public void StartButtonFunc () {
 		// Playerタグのついたオブジェクトを一斉取得
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
