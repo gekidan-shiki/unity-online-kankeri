@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomManagerScript : Photon.MonoBehaviour {
+public class RoomManagerScript : Photon.MonoBehaviour
+{
 
 	// Script系
 	RespawnScript RespawnScript;
@@ -14,13 +15,13 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	private bool connectFailed = false;
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
-	public GameObject gameManager;
+	public GameManager gameManager;
 	// DemonはplayerWhoIsIt = 1のplayer
 	public int myPlayerId;
 
 	public Transform[] startPositions = new Transform[4];
 
-		//以下廃止
+	//以下廃止
 	// waitRoomの座標をもつオブジェクト
 	public GameObject waitingSpawnPoint;
 	// 各チームのstartposを持つオブジェクト
@@ -32,7 +33,8 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	[SerializeField] Button teamDecideButton;
 
 
-	public void Awake () {
+	public void Awake ()
+	{
 		// マスタークライアントのシーンと同じ部屋に入室した人もロードする。
 		PhotonNetwork.automaticallySyncScene = true;
 
@@ -43,17 +45,30 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		}
 	}
 
-	void Start () {
+	void Start ()
+	{
 		
 	}
 
-	public void OnGUI () {
+	void Update ()
+	{
+		if (!PhotonNetwork.isMasterClient) {
+			if (gameManager == null) {
+				GameObject manager = GameObject.Find ("GameManager");
+				if (manager != null)
+					gameManager = manager.GetComponent<GameManager> ();
+			}
+		}
+	}
+
+	public void OnGUI ()
+	{
 		GUILayout.Label (PhotonNetwork.connectionStateDetailed.ToString ());
 		// ルーム名をテキストフィールドから入力
 		this.playerName = GUILayout.TextField (this.playerName);
 		this.roomName = GUILayout.TextField (this.roomName);
 		// ルーム作成ボタン
-		if (GUILayout.Button("Create Room", GUILayout.Width (150))) {
+		if (GUILayout.Button ("Create Room", GUILayout.Width (150))) {
 			// ルーム作成。引数はルーム名
 			PhotonNetwork.CreateRoom (this.roomName);
 		}
@@ -67,24 +82,29 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		}
 	}
 
-	public void CreateRoom () {
+	public void CreateRoom ()
+	{
 		PhotonNetwork.CreateRoom ("myRoom");
 	}
 
-	public void EnterRoom () {
+	public void EnterRoom ()
+	{
 		PhotonNetwork.JoinRoom ("myRoom");
 	}
 
-	public void OnJoinedLobby () {
+	public void OnJoinedLobby ()
+	{
 		Debug.Log ("Joined Lobby");
 	}
 
-	public void OnReceivedRoomListUpdate () {
+	public void OnReceivedRoomListUpdate ()
+	{
 		Debug.Log ("Updated rooms information");
 	}
 
 	// roomにJoinするときの処理
-	public void OnJoinedRoom () {
+	public void OnJoinedRoom ()
+	{
 		Debug.Log ("OnJoinedRoom");
 		// Photonにプレイヤー名を登録
 		PhotonNetwork.playerName = this.playerName;
@@ -92,38 +112,42 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		PhotonPlayer[] playerArray = PhotonNetwork.playerList;
 		// 全プレイヤー名、IDの取得
 		for (int i = 0; i < playerArray.Length; i++) {
-			Debug.Log ((i).ToString () + " : " + playerArray[i].name + " ID = " + playerArray[i].ID);
+			Debug.Log ((i).ToString () + " : " + playerArray [i].name + " ID = " + playerArray [i].ID);
 		}
 		//自分のplayerIDを取得
 		myPlayerId = PhotonNetwork.player.ID;
 		Debug.Log ("myPlayerId = " + myPlayerId);
 
 		// 自分のプレイヤーを生成
-		myPlayer = PhotonNetwork.Instantiate ("Player", startPositions[myPlayerId-1].position, Quaternion.identity, 0);
+		myPlayer = PhotonNetwork.Instantiate ("Player", startPositions [myPlayerId - 1].position, Quaternion.identity, 0);
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
 
 		// MasterClientがGameManagerを生成する
 		if (PhotonNetwork.isMasterClient) {
-			gameManager = PhotonNetwork.Instantiate("GameManager", new Vector3 (0,0,0), Quaternion.identity, 0);
-		}else{
-			gameManager = GameObject.Find("GameManager");
-			GameObject.Find("StartButton").SetActive(false);
+			GameObject gameManagerClone = PhotonNetwork.Instantiate ("GameManager", new Vector3 (0, 0, 0), Quaternion.identity, 0);
+			gameManager = gameManagerClone.GetComponent<GameManager> ();
+		} else {
+			
+			GameObject.Find ("StartButton").SetActive (false);
 		}
 	}
 
 	// 部屋作成に成功したときのコール
-	public void OnCreateRoom () {
+	public void OnCreateRoom ()
+	{
 		Debug.Log ("OnCreateRoom");
 	}
 
 	// 接続に失敗したときにコール
-	public void OnFailedToConnectToPhoton (object parameters) {
+	public void OnFailedToConnectToPhoton (object parameters)
+	{
 		this.connectFailed = true;
 		Debug.Log ("OnFailedToConnectToPhoton. StatusCode: " + parameters + " ServerAddress: " + PhotonNetwork.networkingPeer.ServerAddress);
 	}
-		
-	public void StartButtonFunc () {
-		gameManager.GetComponent<GameManager>().isPlaying = true;
-		GameObject.Find("StartButton").SetActive(false);
+
+	public void StartButtonFunc ()
+	{
+		gameManager.GetComponent<GameManager> ().isPlaying = true;
+		GameObject.Find ("StartButton").SetActive (false);
 	}
 }
