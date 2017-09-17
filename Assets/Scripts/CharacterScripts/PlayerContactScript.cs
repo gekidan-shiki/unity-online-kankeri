@@ -20,16 +20,7 @@ public class PlayerContactScript : MonoBehaviour {
 
 		// player がClear Statueに触れた時
 		if (col.gameObject.tag == "ClearStatue") {
-			// PlayerがDemonだったら
-			if (ps.myPlayerSide == "Demon") {
-				Debug.Log ("Human1は死にました");
-				for (int i = 0; i < players.Length; i++) {
-					if(players [i].GetComponent<PlayerScript>().myPlayerBeFound == true) {
-						Debug.Log (players[i] + "は死にました");
-					}
-				}
-			}
-
+			// 人間側だったら人間側の勝利
 			if (ps.myPlayerSide == "Human") {
 				Debug.Log ("人間側の勝利です");
 			}

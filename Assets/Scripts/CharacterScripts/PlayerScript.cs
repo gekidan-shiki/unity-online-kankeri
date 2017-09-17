@@ -22,6 +22,9 @@ public class PlayerScript : Photon.MonoBehaviour {
 	public string myPlayerSide;
 	public bool myPlayerBeFound;
 
+	// プレイヤーのカメラについているタグ
+	public const string CAMERA_TAG_NAME = "PlayerSight";
+
 	Vector3 lastPos;
 
 	// Photon同期用
@@ -82,6 +85,10 @@ public class PlayerScript : Photon.MonoBehaviour {
 			SyncVariables ();
 			lastPos = transform.position;
 		}
+	}
+
+	public void OnWillRenderObject () {
+		
 	}
 
 	[PunRPC]

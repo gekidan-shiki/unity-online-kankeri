@@ -6,6 +6,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	// script取得
 	PlayerScript ps;
+	public RoomManagerScript rms;
 
 	// team決め
 	public bool myPlayerFlag;
@@ -19,6 +20,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	void start () {
 		ps = this.gameObject.GetComponent<PlayerScript> ();
+		rms = GameObject.Find ("RoomManager").GetComponent<RoomManagerScript> ();
 		canvas = GameObject.Find ("Canvas");
 	}
 
@@ -59,7 +61,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 		//Playerのタグのついたオブジェクトを一斉に取得
 		GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag ("Player");
 		//gameManagerにすべてのplayer情報を渡す
-		ps.npm.players = otherPlayers;
+		//ps.npm.players = otherPlayers;
 
 
 		//他のviewのオブジェクトのviewを一斉に取得
@@ -67,6 +69,17 @@ public class GameStartScript : Photon.MonoBehaviour {
 		for (int i = 0; i < otherViews.Length; i++) {
 			otherViews [i] = otherPlayers [i].GetComponent<PhotonView> ();
 		}
+
+		// demonかhumanかを決定
+		if (rms.playerWhoIsIt == 1) {
+			playerSide = "Demon";
+			Debug.Log ("あなたは鬼です");
+		} else {
+			playerSide = "Human";
+			Debug.Log ("あなたは人間です");
+		}
+
+		MoveToStartPosition ();
 			
 		//startButtonを閉じる
 		GameObject.Find ("Canvas").transform.Find ("StartButton").gameObject.SetActive (false);
@@ -76,8 +89,17 @@ public class GameStartScript : Photon.MonoBehaviour {
 		}
 	}
 
-	void MoveToStartPosition (string teamColor)
+	// startpositionへ移動する関数
+	void MoveToStartPosition ()
 	{
-		this.transform.position = GameObject.Find (teamColor + "StartPos").transform.position + new Vector3 (UnityEngine.Random.Range (-1.0f, 1.0f), 0, UnityEngine.Random.Range (-1.0f, 1.0f));
+		if (rms.playerWhoIsIt == 1) {
+			this.transform.position = GameObject.Find ("DemonStartPosition").transform.position;
+		} else if (rms.playerWhoIsIt == 2) {
+			this.transform.position = GameObject.Find ("PlayerStartPosition1").transform.position;
+		} else if (rms.playerWhoIsIt == 3) {
+			this.transform.position = GameObject.Find ("PlayerStartPosition2").transform.position;
+		} else if (rms.playerWhoIsIt == 4) {
+			this.transform.position = GameObject.Find ("PlayerStartPosition3").transform.position;
+		}
 	}
 }

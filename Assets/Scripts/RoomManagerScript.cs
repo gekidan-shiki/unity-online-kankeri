@@ -105,11 +105,6 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 
 		playerWhoIsIt = PhotonNetwork.player.ID;
 		Debug.Log ("俺は" + playerWhoIsIt);
-		if (playerWhoIsIt == 1) {
-			myPlayer.transform.GetComponent<GameStartScript> ().playerSide = "Demon";
-		} else {
-			myPlayer.transform.GetComponent<GameStartScript> ().playerSide = "Human";
-		}
 	}
 
 	// 部屋作成に成功したときのコール
@@ -122,18 +117,7 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		this.connectFailed = true;
 		Debug.Log ("OnFailedToConnectToPhoton. StatusCode: " + parameters + " ServerAddress: " + PhotonNetwork.networkingPeer.ServerAddress);
 	}
-
-	public void teamDecideButtonFunc () {
-		//myPlayer.GetComponent<GameStartScript> ().TeamDecided ();
-		if (myPlayer.transform.GetComponent<GameStartScript> ().playerSide == "Demon") {
-			Debug.Log ("あなたは鬼です");
-		} else {
-			Debug.Log ("あなたは人間サイドです");
-		}
-		teamDecideButton.gameObject.SetActive (false);
-	}
-
-
+		
 	public void StartButtonFunc () {
 		// Playerタグのついたオブジェクトを一斉取得
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
