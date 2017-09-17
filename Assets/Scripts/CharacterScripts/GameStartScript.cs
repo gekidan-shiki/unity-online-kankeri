@@ -71,7 +71,7 @@ public class GameStartScript : Photon.MonoBehaviour {
 		}
 
 		// demonかhumanかを決定
-		if (rms.playerWhoIsIt == 1) {
+		if (rms.myPlayerId == 1) {
 			playerSide = "Demon";
 			Debug.Log ("あなたは鬼です");
 		} else {
@@ -92,13 +92,13 @@ public class GameStartScript : Photon.MonoBehaviour {
 	// startpositionへ移動する関数
 	void MoveToStartPosition ()
 	{
-		if (rms.playerWhoIsIt == 1) {
+		if (rms.myPlayerId == 1) {
 			this.transform.position = GameObject.Find ("DemonStartPosition").transform.position;
-		} else if (rms.playerWhoIsIt == 2) {
+		} else if (rms.myPlayerId == 2) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition1").transform.position;
-		} else if (rms.playerWhoIsIt == 3) {
+		} else if (rms.myPlayerId == 3) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition2").transform.position;
-		} else if (rms.playerWhoIsIt == 4) {
+		} else if (rms.myPlayerId == 4) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition3").transform.position;
 		}
 	}

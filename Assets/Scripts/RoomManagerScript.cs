@@ -15,8 +15,11 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
 	// DemonはplayerWhoIsIt = 1のplayer
-	public int playerWhoIsIt;
+	public int myPlayerId;
 
+	public Transform[] startPositions = new Transform[4];
+
+		//以下廃止
 	// waitRoomの座標をもつオブジェクト
 	public GameObject waitingSpawnPoint;
 	// 各チームのstartposを持つオブジェクト
@@ -86,25 +89,22 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 		PhotonNetwork.playerName = this.playerName;
 		// Roomに参加しているプレイヤー情報を配列で取得する。
 		PhotonPlayer[] playerArray = PhotonNetwork.playerList;
-		// プレイヤー名、IDの取得
+		// 全プレイヤー名、IDの取得
 		for (int i = 0; i < playerArray.Length; i++) {
 			Debug.Log ((i).ToString () + " : " + playerArray[i].name + " ID = " + playerArray[i].ID);
 		}
-
+		//自分のplayerIDを取得
+		myPlayerId = PhotonNetwork.player.ID;
+		Debug.Log ("myPlayerId = " + myPlayerId);
 
 		// 自分のプレイヤーを生成
-		myPlayer = PhotonNetwork.Instantiate ("Player", transform.position, Quaternion.identity, 0);
-		//RespawnScript.CharacterDataAdd (myPlayer, "Player_Level1");
-		// 初期位置を与える
-		myPlayer.transform.position = new Vector3 (1, 0, 1);
-		// joystick情報を与える。
-		PlayerController pc = myPlayer.GetComponent<PlayerController> ();
-		// 自分のViewを取得
+		myPlayer = PhotonNetwork.Instantiate ("Player", startPositions[myPlayerId-1].position, Quaternion.identity, 0);
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
-		myPlayer.GetComponent<GameStartScript> ().myPlayerFlag = true;
 
-		playerWhoIsIt = PhotonNetwork.player.ID;
-		Debug.Log ("俺は" + playerWhoIsIt);
+//		// joystick情報を与える。
+//		PlayerController pc = myPlayer.GetComponent<PlayerController> ();
+		// 自分のViewを取得
+//		myPlayer.GetComponent<GameStartScript> ().myPlayerFlag = true;
 	}
 
 	// 部屋作成に成功したときのコール
@@ -127,10 +127,5 @@ public class RoomManagerScript : Photon.MonoBehaviour {
 			otherViews [i] = players [i].GetComponent<PhotonView> ();
 			otherViews [i].RPC ("gameStart", PhotonPlayer.Find (otherViews [i].ownerId));
 		}
-	}
-
-
-	void Update () {
-		
 	}
 }
