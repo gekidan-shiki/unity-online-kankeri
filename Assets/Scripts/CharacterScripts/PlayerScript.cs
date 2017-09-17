@@ -36,7 +36,7 @@ public class PlayerScript : Photon.MonoBehaviour {
 		//自分のviewのオブジェクトだったら
 		if (photonView.isMine) {
 			//MINE: local player, simply enable the local scripts
-			this.transform.Find ("Camera").gameObject.SetActive (true);
+			this.transform.Find ("PlayerCamera").gameObject.SetActive (true);
 		} else {           
 
 		}
