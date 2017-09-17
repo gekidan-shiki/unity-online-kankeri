@@ -49,12 +49,12 @@ GameObject:
   - component: {fileID: 92732073550370876}
   - component: {fileID: 81752855590626464}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4219130184690760
 Transform:
   m_ObjectHideFlags: 1
@@ -219,6 +219,9 @@ MonoBehaviour:
   st: {fileID: 0}
   pv: {fileID: 114522555433596806}
   myPlayerSide: 
+  myPlayerBeFound: 0
+  currentMyPlayerSide: 
+  currentMyPlayerBeFound: 0
 --- !u!114 &114390558388020388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,6 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81390ce8e42144bb3a7dec53ce4be61a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
+  players: []
 --- !u!114 &114449604092247256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86b249af7e5e4c638291342d9b1c1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rms: {fileID: 0}
   myPlayerFlag: 0
   playerSide: 
   currentPlayerSide: 
@@ -266,8 +272,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4219130184690760}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114964511773195710
