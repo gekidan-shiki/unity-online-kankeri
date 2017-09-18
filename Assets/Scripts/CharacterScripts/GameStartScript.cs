@@ -60,9 +60,6 @@ public class GameStartScript : Photon.MonoBehaviour {
 		PhotonView myPhotonView = this.GetComponent<PhotonView> ();
 		//Playerのタグのついたオブジェクトを一斉に取得
 		GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag ("Player");
-		//gameManagerにすべてのplayer情報を渡す
-		//ps.npm.players = otherPlayers;
-
 
 		//他のviewのオブジェクトのviewを一斉に取得
 		PhotonView[] otherViews = new PhotonView[otherPlayers.Length];

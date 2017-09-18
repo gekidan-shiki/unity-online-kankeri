@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : Photon.MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class PlayerController : Photon.MonoBehaviour
 	void Move ()
 	{
 		if (isMovable) {
+
+			Debug.Log (CrossPlatformInputManager.GetAxis("Horizontal"));
+			Debug.Log (CrossPlatformInputManager.GetAxis("Vertical"));		
 			if (Input.GetKey ("up") == true) {
 				this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
 			}
