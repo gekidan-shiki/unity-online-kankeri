@@ -41,8 +41,8 @@ public class PlayerController : Photon.MonoBehaviour
 	{
 		if (isMovable) {
 
-			Debug.Log (CrossPlatformInputManager.GetAxis("Horizontal"));
-			Debug.Log (CrossPlatformInputManager.GetAxis("Vertical"));		
+			//Debug.Log (CrossPlatformInputManager.GetAxis("Horizontal"));
+			//Debug.Log (CrossPlatformInputManager.GetAxis("Vertical"));		
 			if (Input.GetKey ("up") == true) {
 				this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
 			}

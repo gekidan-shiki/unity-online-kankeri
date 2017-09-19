@@ -134,6 +134,12 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	{
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
 		GameObject.Find ("StartButton").SetActive (false);
+
+		if (myPlayerId == 1) {
+			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";
+		} else {
+			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
+		}
 	}
 
 	int GetFontSize (float value)

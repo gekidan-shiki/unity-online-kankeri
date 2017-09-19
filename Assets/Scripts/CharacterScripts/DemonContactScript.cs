@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class DemonContactScript : MonoBehaviour {
 
-	public PlayerScript ps;
+	public StatusScript ss;
 	public GameObject[] players;
 
-	float demonAndle = 90f;
-
 	void Start () {
-		ps = this.gameObject.GetComponent<PlayerScript> ();
+		ss = this.gameObject.GetComponent<StatusScript> ();
 		players = GameObject.FindGameObjectsWithTag ("Player");
 	}
 
@@ -19,14 +17,14 @@ public class DemonContactScript : MonoBehaviour {
 	}
 		
 
-	void OnTriggerEnter(Collider col) {
-
+	void OnCollisionEnter(Collision col) {
 		// player がClear Statueに触れた時
 		if (col.gameObject.tag == "ClearStatue") {
+			Debug.Log ("Demon Hits");
 			// PlayerがDemonだったら
-			if (ps.myPlayerSide == "Demon") {
+			if (ss.myPlayerSide == "Demon") {
 				for (int i = 0; i < players.Length; i++) {
-					if (players [i].GetComponent<PlayerScript> ().myPlayerBeFound == true) {
+					if (players [i].GetComponent<StatusScript> ().myPlayerIsFound == true) {
 						Debug.Log (players [i] + "は死にました");
 					}
 				}

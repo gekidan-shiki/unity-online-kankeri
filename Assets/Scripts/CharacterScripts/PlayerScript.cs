@@ -14,20 +14,11 @@ public class PlayerScript : Photon.MonoBehaviour {
 
 	public PhotonView pv;
 
-	//オブジェクト系
-	// playerが鬼か人間かをGSから受け取る
-	// Human側のPlayerが鬼に見つかっているか
-	public string myPlayerSide;
-	public bool myPlayerBeFound;
 
 	// プレイヤーのカメラについているタグ
 	public const string CAMERA_TAG_NAME = "PlayerSight";
 
 	Vector3 lastPos;
-
-	// Photon同期用
-	public string currentMyPlayerSide;
-	public bool currentMyPlayerBeFound;
 
 
 	void Awake () {
@@ -42,39 +33,17 @@ public class PlayerScript : Photon.MonoBehaviour {
 	}
 
 	void Start () {
-		pc = this.GetComponent<PlayerController> ();
+		pc = this.gameObject.GetComponent<PlayerController> ();
 		gs = this.gameObject.GetComponent<GameStartScript> ();
 		pv = this.gameObject.GetComponent<PhotonView> ();
-
-		myPlayerSide = gs.playerSide;
-		if (myPlayerSide == "Human") {
-			myPlayerBeFound = false;
-		}
 	}
 
-	//photonによる座標の同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			stream.SendNext (myPlayerSide);
-			stream.SendNext (myPlayerBeFound);
-		} else {
-			currentMyPlayerSide = (string)stream.ReceiveNext ();
-			currentMyPlayerBeFound = (bool)stream.ReceiveNext ();
-		}
-	}
 
-	// 変数を同期する
-	void SyncVariables () {
-		myPlayerSide = currentMyPlayerSide;
-		myPlayerBeFound = currentMyPlayerBeFound;
-	}
 
 	void Update ()
 	{
 		//自分のview以外はオブジェクトは同期する
 		if (!photonView.isMine) {
-			//photonで値を同期
-			SyncVariables ();
 			lastPos = transform.position;
 		}
 	}

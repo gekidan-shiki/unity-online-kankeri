@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Photon.MonoBehaviour {
+	// ゲーム全体を司る変数をここで保存
 
 	public bool isPlaying;
 	float timer;

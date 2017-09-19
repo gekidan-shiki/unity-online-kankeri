@@ -67,15 +67,6 @@ public class GameStartScript : Photon.MonoBehaviour {
 			otherViews [i] = otherPlayers [i].GetComponent<PhotonView> ();
 		}
 
-		// demonかhumanかを決定
-		if (rms.myPlayerId == 1) {
-			playerSide = "Demon";
-			Debug.Log ("あなたは鬼です");
-		} else {
-			playerSide = "Human";
-			Debug.Log ("あなたは人間です");
-		}
-
 		MoveToStartPosition ();
 			
 		//startButtonを閉じる
