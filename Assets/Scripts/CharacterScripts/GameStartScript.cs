@@ -10,8 +10,6 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	// team決め
 	public bool myPlayerFlag;
-	// demonかhumanか
-	public string playerSide;
 
 	// Photon同期用
 	public string currentPlayerSide;
@@ -24,25 +22,9 @@ public class GameStartScript : Photon.MonoBehaviour {
 		canvas = GameObject.Find ("Canvas");
 	}
 
-	// Photonによる座標同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			stream.SendNext (playerSide);
-		} else {
-			currentPlayerSide = (string)stream.ReceiveNext ();
-		}
-	}
-
-	void SyncVariables () {
-		playerSide = currentPlayerSide;
-	}
-
 
 	void Update () {
-		if (!photonView.isMine) {
-			// Photonで値を同期
-			SyncVariables ();
-		}
+		
 	}
 
 

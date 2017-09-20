@@ -15,13 +15,10 @@ public class FlushController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (foundState == true)
-		{
+		if (foundState == true) {
 			this.img.color = new Color (0.5f, 0f, 0f, 0.5f);
-		}
-		else
-		{
-			//this.img.color = Color.Lerp (this.img.color, Color.clear, Time.deltaTime);
+		} else {
+			this.img.color = Color.Lerp (this.img.color, Color.clear, Time.deltaTime);
 		}
 	}
 }

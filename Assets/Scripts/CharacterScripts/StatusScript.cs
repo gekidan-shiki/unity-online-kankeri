@@ -42,6 +42,9 @@ public class StatusScript : Photon.MonoBehaviour {
 	}
 
 	void Update () {
-		
+		if (!photonView.isMine) {
+			// Photonで値を同期
+			SyncVariables ();
+		}
 	}
 }

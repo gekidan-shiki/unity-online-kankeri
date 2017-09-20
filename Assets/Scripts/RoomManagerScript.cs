@@ -92,12 +92,7 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		Debug.Log ("OnJoinedRoom");
 		// Photonにプレイヤー名を登録
 		PhotonNetwork.playerName = this.playerName;
-//		// Roomに参加しているプレイヤー情報を配列で取得する。
-//		PhotonPlayer[] playerArray = PhotonNetwork.playerList;
-//		// 全プレイヤー名、IDの取得
-//		for (int i = 0; i < playerArray.Length; i++) {
-//			Debug.Log ((i).ToString () + " : " + playerArray [i].name + " ID = " + playerArray [i].ID);
-//		}
+
 		//自分のplayerIDを取得
 		myPlayerId = PhotonNetwork.player.ID;
 		Debug.Log ("myPlayerId = " + myPlayerId);

@@ -26,6 +26,8 @@ public class DemonContactScript : MonoBehaviour {
 				for (int i = 0; i < players.Length; i++) {
 					if (players [i].GetComponent<StatusScript> ().myPlayerIsFound == true) {
 						Debug.Log (players [i] + "は死にました");
+						// Playerを殺す
+						players [i].GetComponent<StatusScript> ().myPlayerIsAlive = false;
 					}
 				}
 			}
