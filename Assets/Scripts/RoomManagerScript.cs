@@ -23,6 +23,8 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	// UI系
 	[SerializeField] Button startButton;
 
+	public GameObject startbutton;
+
 
 	public void Awake ()
 	{
@@ -34,6 +36,8 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		if (PhotonNetwork.connectionStateDetailed == ClientState.PeerCreated) {
 			PhotonNetwork.ConnectUsingSettings ("1.0");
 		}
+
+		startbutton = GameObject.Find ("StartButton");
 	}
 
 	[SerializeField]
@@ -53,6 +57,8 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		guiSkin.button.fontSize = fontSize;
 		guiSkin.textField.fontSize = fontSize;
 		playerName = "Player";
+
+		startbutton.SetActive (false);
 	}
 
 	void Update ()
@@ -106,10 +112,12 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		if (PhotonNetwork.isMasterClient) {
 			GameObject gameManagerClone = PhotonNetwork.Instantiate ("GameManager", new Vector3 (0, 0, 0), Quaternion.identity, 0);
 			gameManager = gameManagerClone.GetComponent<GameManager> ();
+			startbutton.SetActive (true);
 		} else {
 			
-			GameObject.Find ("StartButton").SetActive (false);
+			startbutton.SetActive (false);
 		}
+			
 	}
 
 	// 部屋作成に成功したときのコール
@@ -128,7 +136,7 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	public void StartButtonFunc ()
 	{
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
-		GameObject.Find ("StartButton").SetActive (false);
+		startbutton.SetActive (false);
 
 		if (myPlayerId == 1) {
 			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";

@@ -17,4 +17,12 @@ public class StartSceneManager : MonoBehaviour {
 	public void StartButtonFunc () {
 		SceneManager.LoadScene ("main");
 	}
+
+	public void HowToPlayButtonFunc () {
+		SceneManager.LoadScene ("HowToPlayScene");
+	}
+
+	public void EndGameButtonFunc () {
+		Application.Quit ();
+	}
 }
