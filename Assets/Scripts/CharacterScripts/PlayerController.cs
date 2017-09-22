@@ -16,6 +16,20 @@ public class PlayerController : Photon.MonoBehaviour
 
 	private bool isMovable;
 
+
+	//移動時の接触判定
+	public int rightflag = 0;
+	public int leftflag = 0;
+	public int upflag = 0;
+	public int downflag = 0;
+
+	public float HorizontalStopper = 1.0f;
+	public float VerticalStopper = 1.0f;
+
+	//加速度と速度
+	float velocityX;
+	float velocityZ;
+
 	void Start ()
 	{
 		if (photonView.isMine) {
@@ -32,6 +46,8 @@ public class PlayerController : Photon.MonoBehaviour
 				isMovable = gameManager.isPlaying;
 			}
 			Move ();
+			velocityX = CrossPlatformInputManager.GetAxis ("Horizontal");
+			velocityZ = CrossPlatformInputManager.GetAxis ("Vertical");
 		} else {
 
 		}
@@ -40,20 +56,9 @@ public class PlayerController : Photon.MonoBehaviour
 	void Move ()
 	{
 		if (isMovable) {
-
-			//Debug.Log (CrossPlatformInputManager.GetAxis("Horizontal"));
-			//Debug.Log (CrossPlatformInputManager.GetAxis("Vertical"));		
-			if (Input.GetKey ("up") == true) {
-				this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
-			}
-			if (Input.GetKey ("down") == true) {
-				this.transform.position -= this.transform.forward * goForwardSpeed * Time.deltaTime;
-			}
-			if (Input.GetKey ("right") == true) {
-				this.transform.Rotate (new Vector3 (0, goSideRotation * Time.deltaTime, 0));
-			}
-			if (Input.GetKey ("left") == true) {
-				this.transform.Rotate (new Vector3 (0, -goSideRotation * Time.deltaTime, 0));
+			if (velocityX != 0 || velocityZ != 0) {
+				this.transform.position += this.transform.forward * velocityZ * 8 * Time.deltaTime;
+				this.transform.Rotate (new Vector3 (0, velocityX * 45 * Time.deltaTime, 0));
 			}
 		}
 	}

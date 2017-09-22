@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatusScript : Photon.MonoBehaviour {
 
 	// Player個々の状態の変数をここで保存
+	// 変数の効果についても記述
 
 	public int myPlayerId;
 	public string myPlayerSide;
@@ -15,6 +16,10 @@ public class StatusScript : Photon.MonoBehaviour {
 	public string currentMyPlayerSide;
 	public bool currentMyPlayerIsFound;
 	public bool currentMyPlayerIsAlive;
+
+	void Awake () {
+		myPlayerIsAlive = true;
+	}
 
 	void Start () {
 		myPlayerId = PhotonNetwork.player.ID;
@@ -46,5 +51,7 @@ public class StatusScript : Photon.MonoBehaviour {
 			// Photonで値を同期
 			SyncVariables ();
 		}
+
+
 	}
 }

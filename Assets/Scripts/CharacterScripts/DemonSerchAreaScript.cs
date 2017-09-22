@@ -5,12 +5,12 @@ using UnityEngine;
 public class DemonSerchAreaScript : MonoBehaviour {
 
 	public PlayerScript ps;
-	public FlushController fc;
 	public GameObject[] players;
+	public PlayerSoundScript pss;
 
 
 	void Start () {
-		fc = GameObject.Find ("Canvas").GetComponentInChildren<FlushController> ();
+		pss = this.gameObject.GetComponentInParent<PlayerSoundScript> ();
 	}
 		
 	void OnTriggerStay (Collider col) {
@@ -25,8 +25,7 @@ public class DemonSerchAreaScript : MonoBehaviour {
 					Debug.Log (col.name + "を見つけました");
 					// 見つかった状態にする
 					col.GetComponent<StatusScript> ().myPlayerIsFound = true;
-					// 画面を赤くする
-					fc.foundState = true;
+					pss.FoundSound ();
 				} else {
 
 				}

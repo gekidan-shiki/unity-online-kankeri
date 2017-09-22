@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Photon.MonoBehaviour {
 	// ゲーム全体を司る変数をここで保存
+	// オーナーのみが生成。他のプレイヤーは参照するのみ。
 
 	public bool isPlaying;
-	float timer;
 
 	public bool currentIsPlaying;
 	float currentTimer;
 
+	void Start () {
+	}
 
 	void Update () {
+
+
 		if (photonView.isMine) {
 			if (isPlaying) {
-				timer += Time.deltaTime;
+				
 			}
 		} else {
 			SyncValiables ();
@@ -28,7 +33,6 @@ public class GameManager : Photon.MonoBehaviour {
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
 		if (stream.isWriting) {
 			stream.SendNext (isPlaying);
-			stream.SendNext (timer);
 		} else {
 			currentIsPlaying = (bool)stream.ReceiveNext ();
 			currentTimer = (float)stream.ReceiveNext ();
@@ -37,7 +41,6 @@ public class GameManager : Photon.MonoBehaviour {
 
 	void SyncValiables () {
 		isPlaying = currentIsPlaying;
-		timer = currentTimer;
 	}
 
 }

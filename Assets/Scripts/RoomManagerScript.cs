@@ -25,7 +25,6 @@ public class RoomManagerScript : Photon.MonoBehaviour
 
 	public GameObject startbutton;
 
-
 	public void Awake ()
 	{
 		// マスタークライアントのシーンと同じ部屋に入室した人もロードする。
@@ -114,7 +113,6 @@ public class RoomManagerScript : Photon.MonoBehaviour
 			gameManager = gameManagerClone.GetComponent<GameManager> ();
 			startbutton.SetActive (true);
 		} else {
-			
 			startbutton.SetActive (false);
 		}
 			
@@ -142,6 +140,19 @@ public class RoomManagerScript : Photon.MonoBehaviour
 			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";
 		} else {
 			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
+		}
+		MoveToStartPos ();
+	}
+
+	public void MoveToStartPos () {
+		if (myPlayerId == 1) {
+			myPlayer.transform.position = startPositions [0].transform.position;
+		} else if (myPlayerId == 2) {
+			myPlayer.transform.position = startPositions [1].transform.position;
+		} else if (myPlayerId == 3) {
+			myPlayer.transform.position = startPositions [2].transform.position;
+		} else if (myPlayerId == 4) {
+			myPlayer.transform.position = startPositions [3].transform.position;
 		}
 	}
 
