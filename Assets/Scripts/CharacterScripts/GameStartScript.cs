@@ -10,8 +10,6 @@ public class GameStartScript : Photon.MonoBehaviour {
 
 	// team決め
 	public bool myPlayerFlag;
-	// demonかhumanか
-	public string playerSide;
 
 	// Photon同期用
 	public string currentPlayerSide;
@@ -24,25 +22,9 @@ public class GameStartScript : Photon.MonoBehaviour {
 		canvas = GameObject.Find ("Canvas");
 	}
 
-	// Photonによる座標同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			stream.SendNext (playerSide);
-		} else {
-			currentPlayerSide = (string)stream.ReceiveNext ();
-		}
-	}
-
-	void SyncVariables () {
-		playerSide = currentPlayerSide;
-	}
-
 
 	void Update () {
-		if (!photonView.isMine) {
-			// Photonで値を同期
-			SyncVariables ();
-		}
+		
 	}
 
 
@@ -60,23 +42,11 @@ public class GameStartScript : Photon.MonoBehaviour {
 		PhotonView myPhotonView = this.GetComponent<PhotonView> ();
 		//Playerのタグのついたオブジェクトを一斉に取得
 		GameObject[] otherPlayers = GameObject.FindGameObjectsWithTag ("Player");
-		//gameManagerにすべてのplayer情報を渡す
-		//ps.npm.players = otherPlayers;
-
 
 		//他のviewのオブジェクトのviewを一斉に取得
 		PhotonView[] otherViews = new PhotonView[otherPlayers.Length];
 		for (int i = 0; i < otherViews.Length; i++) {
 			otherViews [i] = otherPlayers [i].GetComponent<PhotonView> ();
-		}
-
-		// demonかhumanかを決定
-		if (rms.playerWhoIsIt == 1) {
-			playerSide = "Demon";
-			Debug.Log ("あなたは鬼です");
-		} else {
-			playerSide = "Human";
-			Debug.Log ("あなたは人間です");
 		}
 
 		MoveToStartPosition ();
@@ -92,13 +62,13 @@ public class GameStartScript : Photon.MonoBehaviour {
 	// startpositionへ移動する関数
 	void MoveToStartPosition ()
 	{
-		if (rms.playerWhoIsIt == 1) {
+		if (rms.myPlayerId == 1) {
 			this.transform.position = GameObject.Find ("DemonStartPosition").transform.position;
-		} else if (rms.playerWhoIsIt == 2) {
+		} else if (rms.myPlayerId == 2) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition1").transform.position;
-		} else if (rms.playerWhoIsIt == 3) {
+		} else if (rms.myPlayerId == 3) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition2").transform.position;
-		} else if (rms.playerWhoIsIt == 4) {
+		} else if (rms.myPlayerId == 4) {
 			this.transform.position = GameObject.Find ("PlayerStartPosition3").transform.position;
 		}
 	}

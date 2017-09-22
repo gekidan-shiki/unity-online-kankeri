@@ -3,40 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : Photon.MonoBehaviour {
 
 	// スクリプト取得
 	public NetworkPlayManagerScript npm;
-	public RespawnScript rps;
-
+	StatusScript ss;
+	CameraEffectScript ces;
 	PlayerController pc;
 	GameStartScript gs;
-	public StatusScript st;
+	PlayerSoundScript pss;
 
 	public PhotonView pv;
 
-	//オブジェクト系
-	// playerが鬼か人間かをGSから受け取る
-	// Human側のPlayerが鬼に見つかっているか
-	public string myPlayerSide;
-	public bool myPlayerBeFound;
 
 	// プレイヤーのカメラについているタグ
 	public const string CAMERA_TAG_NAME = "PlayerSight";
 
 	Vector3 lastPos;
 
-	// Photon同期用
-	public string currentMyPlayerSide;
-	public bool currentMyPlayerBeFound;
-
 
 	void Awake () {
 		//自分のviewのオブジェクトだったら
 		if (photonView.isMine) {
 			//MINE: local player, simply enable the local scripts
-			this.transform.Find ("Camera").gameObject.SetActive (true);
+			this.transform.Find ("PlayerCamera").gameObject.SetActive (true);
 		} else {           
 
 		}
@@ -44,51 +36,32 @@ public class PlayerScript : Photon.MonoBehaviour {
 	}
 
 	void Start () {
-		npm = GameObject.Find("GameManager").GetComponent<NetworkPlayManagerScript>();
-		rps = GameObject.Find("GameManager").GetComponent<RespawnScript>();
-		st = this.gameObject.GetComponent<StatusScript> ();
-		pc = this.GetComponent<PlayerController> ();
+		pc = this.gameObject.GetComponent<PlayerController> ();
 		gs = this.gameObject.GetComponent<GameStartScript> ();
 		pv = this.gameObject.GetComponent<PhotonView> ();
-		//ObjectScriptの登録
-		this.GetComponent<ObjectScript> ().thisObject = "player";
-		this.GetComponent<ObjectScript> ().ownerId = this.GetComponent<PhotonView> ().ownerId;
-
-		myPlayerSide = gs.playerSide;
-		if (myPlayerSide == "Human") {
-			myPlayerBeFound = false;
-		}
+		ss = this.gameObject.GetComponent<StatusScript> ();
+		ces = this.gameObject.GetComponent<CameraEffectScript> ();
+		pss = this.gameObject.GetComponent<PlayerSoundScript> ();
 	}
 
-	//photonによる座標の同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			stream.SendNext (myPlayerSide);
-			stream.SendNext (myPlayerBeFound);
-		} else {
-			currentMyPlayerSide = (string)stream.ReceiveNext ();
-			currentMyPlayerBeFound = (bool)stream.ReceiveNext ();
-		}
-	}
 
-	// 変数を同期する
-	void SyncVariables () {
-		myPlayerSide = currentMyPlayerSide;
-		myPlayerBeFound = currentMyPlayerBeFound;
-	}
 
 	void Update ()
 	{
 		//自分のview以外はオブジェクトは同期する
 		if (!photonView.isMine) {
-			//photonで値を同期
-			SyncVariables ();
 			lastPos = transform.position;
 		}
-	}
 
-	public void OnWillRenderObject () {
-		
+		if (ss.myPlayerIsAlive == false) {
+			ces.GameOverView ();
+			SceneManager.LoadScene ("GameOverScene");
+		}
+
+		if (ss.myPlayerIsFound == true) {
+			ces.FoundView ();
+			pss.FoundSound ();
+		}
 	}
 
 	[PunRPC]

@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerContactScript : MonoBehaviour {
 
-	public PlayerScript ps;
+	public StatusScript ss;
 	public GameObject[] players;
 
 	void Start () {
-		ps = this.gameObject.GetComponent<PlayerScript> ();
+		ss = this.gameObject.GetComponent<StatusScript> ();
 		players = GameObject.FindGameObjectsWithTag ("Player");
     }
 
@@ -19,10 +20,11 @@ public class PlayerContactScript : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 
 		// player がClear Statueに触れた時
-		if (col.gameObject.tag == "ClearStatue") {
+		if (col.gameObject.tag == "Kan") {
 			// 人間側だったら人間側の勝利
-			if (ps.myPlayerSide == "Human") {
+			if (ss.myPlayerSide == "Human") {
 				Debug.Log ("人間側の勝利です");
+				SceneManager.LoadScene ("HumanWinScene");
 			}
 		}
 	}

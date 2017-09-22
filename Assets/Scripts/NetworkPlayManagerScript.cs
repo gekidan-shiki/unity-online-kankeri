@@ -10,7 +10,4 @@ public class NetworkPlayManagerScript : Photon.MonoBehaviour {
 	public GameObject[] players;
 	public int[] playersOwnerID;
 
-	//ステータスを保持する変数の宣言
-	public StatusScript[] playerStatus;
-
 }

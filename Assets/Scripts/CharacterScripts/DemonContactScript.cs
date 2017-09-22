@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DemonContactScript : MonoBehaviour {
 
-	public PlayerScript ps;
+	public StatusScript ss;
 	public GameObject[] players;
 
-	float demonAndle = 90f;
-
 	void Start () {
-		ps = this.gameObject.GetComponent<PlayerScript> ();
-		players = GameObject.FindGameObjectsWithTag ("Player");
+		ss = this.gameObject.GetComponent<StatusScript> ();
 	}
 
 	void Update () {
@@ -19,17 +17,22 @@ public class DemonContactScript : MonoBehaviour {
 	}
 		
 
-	void OnTriggerEnter(Collider col) {
-
+	void OnCollisionEnter(Collision col) {
 		// player がClear Statueに触れた時
-		if (col.gameObject.tag == "ClearStatue") {
-			// PlayerがDemonだったら
-			if (ps.myPlayerSide == "Demon") {
+		if (ss.myPlayerSide == "Demon") {
+			if (col.gameObject.tag == "Kan") {
+				players = GameObject.FindGameObjectsWithTag ("Player");
 				for (int i = 0; i < players.Length; i++) {
-					if (players [i].GetComponent<PlayerScript> ().myPlayerBeFound == true) {
+					if (players [i].GetComponent<StatusScript> ().myPlayerIsFound == true) {
 						Debug.Log (players [i] + "は死にました");
+						// Playerを殺す
+						players [i].GetComponent<StatusScript> ().myPlayerIsAlive = false;
 					}
 				}
+			}
+
+			if (players.Length == 1) {
+				SceneManager.LoadScene ("DemonWinScene");
 			}
 		}
 	}
