@@ -136,7 +136,7 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
 		startbutton.SetActive (false);
 
-		if (myPlayerId == 1) {
+		if (PhotonNetwork.isMasterClient) {
 			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";
 		} else {
 			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
