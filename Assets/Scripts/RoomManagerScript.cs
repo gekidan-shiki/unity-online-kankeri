@@ -14,7 +14,6 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	private bool connectFailed = false;
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
-	public GameObject[] players;
 	public GameManager gameManager;
 	// DemonはplayerWhoIsIt = 1のplayer
 	public int myPlayerId;
@@ -108,6 +107,13 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		// 自分のViewを取得
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
 
+		// MasterClientならDemon、違えばHumanとする
+		if (PhotonNetwork.isMasterClient) {
+			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Demon";
+		} else {
+			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
+		}
+
 		// MasterClientがGameManagerを生成する
 		if (PhotonNetwork.isMasterClient) {
 			GameObject gameManagerClone = PhotonNetwork.Instantiate ("GameManager", new Vector3 (0, 0, 0), Quaternion.identity, 0);
@@ -137,8 +143,6 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	{
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
 		startbutton.SetActive (false);
-		// DemonかHumanかのチーム決め
-		gameManager.DeciedTeamFunc ();
 		MoveToStartPos ();
 	}
 

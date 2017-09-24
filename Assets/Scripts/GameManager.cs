@@ -48,16 +48,16 @@ public class GameManager : Photon.MonoBehaviour {
 		isPlaying = currentIsPlaying;
 	}
 
-	public void DeciedTeamFunc () {
-		players = GameObject.FindGameObjectsWithTag ("Player");
-
-		for (int i = 0; i < players.Length; i++) {
-			if (PhotonNetwork.isMasterClient) {
-				players [i].GetComponent<StatusScript> ().myPlayerSide = "Demon";
-			} else {
-				players [i].GetComponent<StatusScript> ().myPlayerSide = "Human";
-			}
-		}
-	}
+//	public void DeciedTeamFunc () {
+//		players = GameObject.FindGameObjectsWithTag ("Player");
+//
+//		for (int i = 0; i < players.Length; i++) {
+//			if () {
+//				players [i].GetComponent<StatusScript> ().myPlayerSide = "Demon";
+//			} else {
+//				players [i].GetComponent<StatusScript> ().myPlayerSide = "Human";
+//			}
+//		}
+//	}
 
 }

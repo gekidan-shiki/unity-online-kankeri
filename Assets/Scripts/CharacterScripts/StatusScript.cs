@@ -28,11 +28,12 @@ public class StatusScript : Photon.MonoBehaviour {
 
 	//photonによる座標の同期
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
+		// 送信時
 		if (stream.isWriting) {
 			stream.SendNext (myPlayerSide);
 			stream.SendNext (myPlayerIsFound);
 			stream.SendNext (myPlayerIsAlive);
-
+		// 受診時
 		} else {
 			currentMyPlayerSide = (string)stream.ReceiveNext ();
 			currentMyPlayerIsFound = (bool)stream.ReceiveNext ();
@@ -48,7 +49,7 @@ public class StatusScript : Photon.MonoBehaviour {
 
 	void Update () {
 		if (!photonView.isMine) {
-			// Photonで値を同期
+			// 自分以外のviewをPhotonで値を同期
 			SyncVariables ();
 		}
 
