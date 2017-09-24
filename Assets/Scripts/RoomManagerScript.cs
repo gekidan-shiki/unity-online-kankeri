@@ -14,6 +14,7 @@ public class RoomManagerScript : Photon.MonoBehaviour
 	private bool connectFailed = false;
 	private PhotonView myPhotonView;
 	public GameObject myPlayer;
+	public GameObject[] players;
 	public GameManager gameManager;
 	// DemonはplayerWhoIsIt = 1のplayer
 	public int myPlayerId;
@@ -131,16 +132,13 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		Debug.Log ("OnFailedToConnectToPhoton. StatusCode: " + parameters + " ServerAddress: " + PhotonNetwork.networkingPeer.ServerAddress);
 	}
 
+	// スタートボタンを押した時の処理
 	public void StartButtonFunc ()
 	{
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
 		startbutton.SetActive (false);
-
-		if (PhotonNetwork.isMasterClient) {
-			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";
-		} else {
-			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
-		}
+		// DemonかHumanかのチーム決め
+		gameManager.DeciedTeamFunc ();
 		MoveToStartPos ();
 	}
 

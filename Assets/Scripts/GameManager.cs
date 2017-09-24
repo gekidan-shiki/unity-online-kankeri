@@ -12,7 +12,12 @@ public class GameManager : Photon.MonoBehaviour {
 	public bool currentIsPlaying;
 	float currentTimer;
 
+
+	// Object系
+	public GameObject[] players;
+
 	void Start () {
+		
 	}
 
 	void Update () {
@@ -41,6 +46,18 @@ public class GameManager : Photon.MonoBehaviour {
 
 	void SyncValiables () {
 		isPlaying = currentIsPlaying;
+	}
+
+	public void DeciedTeamFunc () {
+		players = GameObject.FindGameObjectsWithTag ("Player");
+
+		for (int i = 0; i < players.Length; i++) {
+			if (PhotonNetwork.isMasterClient) {
+				players [i].GetComponent<StatusScript> ().myPlayerSide = "Demon";
+			} else {
+				players [i].GetComponent<StatusScript> ().myPlayerSide = "Human";
+			}
+		}
 	}
 
 }
