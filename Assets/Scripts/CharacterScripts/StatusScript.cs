@@ -10,7 +10,7 @@ public class StatusScript : Photon.MonoBehaviour {
 	public int myPlayerId;
 	public string myPlayerSide;
 	public bool myPlayerIsFound;
-	public bool myPlayerIsAlive;
+	public bool myPlayerIsAlive = true;
 
 	// Photon同期用
 	public string currentMyPlayerSide;
@@ -28,11 +28,12 @@ public class StatusScript : Photon.MonoBehaviour {
 
 	//photonによる座標の同期
 	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
+		// 送信時
 		if (stream.isWriting) {
 			stream.SendNext (myPlayerSide);
 			stream.SendNext (myPlayerIsFound);
 			stream.SendNext (myPlayerIsAlive);
-
+		// 受信時
 		} else {
 			currentMyPlayerSide = (string)stream.ReceiveNext ();
 			currentMyPlayerIsFound = (bool)stream.ReceiveNext ();
@@ -44,11 +45,12 @@ public class StatusScript : Photon.MonoBehaviour {
 	void SyncVariables () {
 		myPlayerSide = currentMyPlayerSide;
 		myPlayerIsFound = currentMyPlayerIsFound;
+		myPlayerIsAlive = currentMyPlayerIsAlive;
 	}
 
 	void Update () {
 		if (!photonView.isMine) {
-			// Photonで値を同期
+			// 自分以外のviewをPhotonで値を同期
 			SyncVariables ();
 		}
 

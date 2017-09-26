@@ -15,6 +15,8 @@ public class PlayerScript : Photon.MonoBehaviour {
 	GameStartScript gs;
 	PlayerSoundScript pss;
 
+	RoomManagerScript rms;
+
 	public PhotonView pv;
 
 
@@ -42,6 +44,8 @@ public class PlayerScript : Photon.MonoBehaviour {
 		ss = this.gameObject.GetComponent<StatusScript> ();
 		ces = this.gameObject.GetComponent<CameraEffectScript> ();
 		pss = this.gameObject.GetComponent<PlayerSoundScript> ();
+
+		rms = GameObject.Find ("RoomManager").GetComponent<RoomManagerScript> ();
 	}
 
 
@@ -53,9 +57,9 @@ public class PlayerScript : Photon.MonoBehaviour {
 			lastPos = transform.position;
 		}
 
-		if (ss.myPlayerIsAlive == false) {
+		if (rms.gameManager.isPlaying == true && ss.myPlayerIsAlive == false) {
 			ces.GameOverView ();
-			SceneManager.LoadScene ("GameOverScene");
+			//SceneManager.LoadScene ("GameOverScene");
 		}
 
 		if (ss.myPlayerIsFound == true) {

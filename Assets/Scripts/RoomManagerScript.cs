@@ -107,6 +107,13 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		// 自分のViewを取得
 		myPhotonView = myPlayer.GetComponent<PhotonView> ();
 
+		// MasterClientならDemon、違えばHumanとする
+		if (PhotonNetwork.isMasterClient) {
+			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Demon";
+		} else {
+			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
+		}
+
 		// MasterClientがGameManagerを生成する
 		if (PhotonNetwork.isMasterClient) {
 			GameObject gameManagerClone = PhotonNetwork.Instantiate ("GameManager", new Vector3 (0, 0, 0), Quaternion.identity, 0);
@@ -131,16 +138,11 @@ public class RoomManagerScript : Photon.MonoBehaviour
 		Debug.Log ("OnFailedToConnectToPhoton. StatusCode: " + parameters + " ServerAddress: " + PhotonNetwork.networkingPeer.ServerAddress);
 	}
 
+	// スタートボタンを押した時の処理
 	public void StartButtonFunc ()
 	{
 		gameManager.GetComponent<GameManager> ().isPlaying = true;
 		startbutton.SetActive (false);
-
-		if (PhotonNetwork.isMasterClient) {
-			myPlayer.GetComponent<StatusScript>().myPlayerSide = "Demon";
-		} else {
-			myPlayer.GetComponent<StatusScript> ().myPlayerSide = "Human";
-		}
 		MoveToStartPos ();
 	}
 

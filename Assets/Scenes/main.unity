@@ -1601,6 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 1213772284173940, guid: f90a3e1c9ee9d42489558575d84b2d63, type: 2}
+  players: []
   gameManager: {fileID: 114863412799416690, guid: 1df81f0b1e421485b821d07dc304d1ff,
     type: 2}
   myPlayerId: 0
@@ -1610,7 +1611,7 @@ MonoBehaviour:
   - {fileID: 598293958}
   - {fileID: 1883780285}
   startButton: {fileID: 113405759}
-  startbutton: {fileID: 0}
+  startbutton: {fileID: 113405757}
   guiSkin: {fileID: 11400000, guid: dd474e52903a14a6ca6d9c40f5ff686c, type: 2}
   GUIHeight: 0
 --- !u!4 &799370580

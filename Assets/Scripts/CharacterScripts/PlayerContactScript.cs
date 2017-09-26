@@ -17,15 +17,24 @@ public class PlayerContactScript : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter(Collider col) {
 
-		// player がClear Statueに触れた時
-		if (col.gameObject.tag == "Kan") {
-			// 人間側だったら人間側の勝利
-			if (ss.myPlayerSide == "Human") {
+	void OnCollisionEnter(Collision col) {
+		if (ss.myPlayerSide == "Human") {
+			if (col.gameObject.tag == "Kan") {
 				Debug.Log ("人間側の勝利です");
 				SceneManager.LoadScene ("HumanWinScene");
 			}
 		}
 	}
+//	void OnTriggerEnter(Collider col) {
+//
+//		// player がClear Statueに触れた時
+//		if (col.gameObject.tag == "Kan") {
+//			// 人間側だったら人間側の勝利
+//			if (ss.myPlayerSide == "Human") {
+//				Debug.Log ("人間側の勝利です");
+//				SceneManager.LoadScene ("HumanWinScene");
+//			}
+//		}
+//	}
 }
