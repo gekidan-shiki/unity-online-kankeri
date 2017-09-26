@@ -10,7 +10,7 @@ public class StatusScript : Photon.MonoBehaviour {
 	public int myPlayerId;
 	public string myPlayerSide;
 	public bool myPlayerIsFound;
-	public bool myPlayerIsAlive;
+	public bool myPlayerIsAlive = true;
 
 	// Photon同期用
 	public string currentMyPlayerSide;
@@ -33,7 +33,7 @@ public class StatusScript : Photon.MonoBehaviour {
 			stream.SendNext (myPlayerSide);
 			stream.SendNext (myPlayerIsFound);
 			stream.SendNext (myPlayerIsAlive);
-		// 受診時
+		// 受信時
 		} else {
 			currentMyPlayerSide = (string)stream.ReceiveNext ();
 			currentMyPlayerIsFound = (bool)stream.ReceiveNext ();
@@ -45,6 +45,7 @@ public class StatusScript : Photon.MonoBehaviour {
 	void SyncVariables () {
 		myPlayerSide = currentMyPlayerSide;
 		myPlayerIsFound = currentMyPlayerIsFound;
+		myPlayerIsAlive = currentMyPlayerIsAlive;
 	}
 
 	void Update () {

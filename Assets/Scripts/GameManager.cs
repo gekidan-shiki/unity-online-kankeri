@@ -16,6 +16,10 @@ public class GameManager : Photon.MonoBehaviour {
 	// Object系
 	public GameObject[] players;
 
+	void Awake () {
+		isPlaying = false;
+	}
+
 	void Start () {
 		
 	}

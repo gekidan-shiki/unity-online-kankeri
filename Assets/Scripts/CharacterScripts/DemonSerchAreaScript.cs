@@ -24,7 +24,7 @@ public class DemonSerchAreaScript : MonoBehaviour {
 				if (!Physics.Linecast (this.gameObject.transform.parent.gameObject.transform.position, targetPos)) {
 					Debug.Log (col.name + "を見つけました");
 					// 見つかった状態にする
-					col.GetComponent<StatusScript> ().myPlayerIsFound = true;
+					col.gameObject.GetComponent<StatusScript> ().myPlayerIsFound = true;
 					pss.FoundSound ();
 				} else {
 
