@@ -21,7 +21,7 @@ MonoBehaviour:
   ServerAddress: 
   ServerPort: 5055
   VoiceServerPort: 5055
-  JoinLobby: 1
+  JoinLobby: 0
   EnableLobbyStatistics: 1
   PunLogging: 0
   NetworkLogging: 1
@@ -39,4 +39,10 @@ MonoBehaviour:
   - EnableStartBtn
   - EnableStartButton
   - gameStart
+  - ColorRpc
+  - DoJump
+  - Flash
+  - Marco
+  - Polo
+  - TaggedPlayer
   DisableAutoOpenWizard: 1
