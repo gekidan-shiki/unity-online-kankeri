@@ -2,32 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour {
-  float goForwardSpeed = 5;
-  float turnRotation = 90;
+namespace Com.MyCompany.MyGame {
+  // This script manage Player's action.
+  public class PlayerController : Photon.MonoBehaviour {
+    float goForwardSpeed = 5;
+    float turnRotation = 90;
+
+    GunScript _gunScript;
 
 
-	void Start () {
-		
-	}
-	
-	void Update () {
-	  Move();	
-	}
+    void Start () {
+      _gunScript = this.gameObject.GetComponentInChildren<GunScript> ();
+    }
+    
+    void Update () {
+      if(photonView.isMine == false && PhotonNetwork.connected == true) {
+        return;
+      }
+      Move();	
 
-  void Move () {
-    if (Input.GetKey("up")) {
-      this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
+      if(photonView.isMine) {
+        if(Input.GetKeyDown(KeyCode.Z)) {
+          _gunScript.Shoot ();
+        }
+      }
     }
-    if (Input.GetKey("down")) {
-      this.transform.position -= this.transform.forward * goForwardSpeed * Time.deltaTime;
+
+    void Move () {
+      if (Input.GetKey("up")) {
+        this.transform.position += this.transform.forward * goForwardSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("down")) {
+        this.transform.position -= this.transform.forward * goForwardSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("right")) {
+        this.transform.Rotate(new Vector3 (0, turnRotation * Time.deltaTime, 0));
+      }
+      if (Input.GetKey("left")) {
+        this.transform.Rotate(new Vector3 (0, -turnRotation * Time.deltaTime, 0));
+      }
     }
-    if (Input.GetKey("right")) {
-      this.transform.Rotate(new Vector3 (0, turnRotation * Time.deltaTime, 0));
-    }
-    if (Input.GetKey("left")) {
-      this.transform.Rotate(new Vector3 (0, -turnRotation * Time.deltaTime, 0));
-    }
+
   }
-
 }
