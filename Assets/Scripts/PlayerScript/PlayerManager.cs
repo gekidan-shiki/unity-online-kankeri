@@ -36,8 +36,9 @@ namespace Com.MyCompany.MyGame {
       }
 
       // Create the UI
-      if (this.PlayerUiPrefab != null) {
-        GameObject _uiGo = Instantiate (this.PlayerUiPrefab) as GameObject;
+      if (PlayerUiPrefab != null) {
+        GameObject _uiGo = Instantiate (PlayerUiPrefab) as GameObject;
+
         _uiGo.SendMessage ("SetTarget", this, SendMessageOptions.RequireReceiver);
       } else {
         Debug.LogWarning ("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);

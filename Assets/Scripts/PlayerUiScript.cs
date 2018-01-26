@@ -21,13 +21,10 @@ namespace Com.MyCompany.MyGame {
 
     Transform _targetTransform;
 
-    Renderer _targetRenderer;
-
     Vector3 _targetPosition;
 
 
-    void Awake(){
-
+    void Awake() {
       this.GetComponent<Transform>().SetParent (GameObject.Find("Canvas").GetComponent<Transform>());
     }
       
@@ -49,9 +46,10 @@ namespace Com.MyCompany.MyGame {
     void LateUpdate () {
 
       // Do not show the UI if we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself.
-      if (_targetRenderer!=null) {
-        this.gameObject.SetActive(_targetRenderer.isVisible);
-      }
+//      if (_targetRenderer!=null) {
+//        this.gameObject.SetActive(_targetRenderer.isVisible);
+//        Debug.Log (_targetRenderer.isVisible);
+//      }
         
       // Follow the Target GameObject on screen.
       if (_targetTransform!=null)
@@ -74,7 +72,6 @@ namespace Com.MyCompany.MyGame {
       // Cache references for efficiency because we are going to reuse them.
       _target = target;
       _targetTransform = _target.GetComponent<Transform>();
-      _targetRenderer = _target.GetComponent<Renderer>();
 
 
       CharacterController _characterController = _target.GetComponent<CharacterController> ();

@@ -10,7 +10,6 @@ namespace Com.MyCompany.MyGame {
 
     GunScript _gunScript;
 
-
     void Start () {
       _gunScript = this.gameObject.GetComponentInChildren<GunScript> ();
     }
@@ -21,11 +20,8 @@ namespace Com.MyCompany.MyGame {
       }
       Move();	
 
-      if(photonView.isMine) {
-        if(Input.GetKeyDown(KeyCode.Z)) {
-          _gunScript.Shoot ();
-        }
-      }
+      _gunScript.Shoot ();
+
     }
 
     void Move () {
