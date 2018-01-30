@@ -5,21 +5,55 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/main.unity
-    guid: ac255c195a7c142c49531d9c34de9eba
+    path: Assets/Scenes/Launcher.unity
+    guid: 2c69bcddb290147cdb260a61a1e0247e
   - enabled: 1
-    path: Assets/Scenes/Start.unity
-    guid: 971b98a5e8c0e4c8e90c8ca00ecc6afd
+    path: Assets/Scenes/Room for 1.unity
+    guid: 08e02423569594a1b83330d3f5511386
   - enabled: 1
-    path: Assets/Scenes/HowToPlayScene.unity
-    guid: b65a608a865294f2b89a77bc0e74fab5
+    path: Assets/Scenes/Room for 2.unity
+    guid: e2a9a4bf5ee02404298df62199f0a8e6
   - enabled: 1
-    path: Assets/Scenes/GameOverScene.unity
-    guid: a7b9de37c0e7e4df59d82d7d0a61cec1
+    path: Assets/Scenes/Room for 3.unity
+    guid: 10d2bd22dc1ad478daf54ab7aef434b9
   - enabled: 1
-    path: Assets/Scenes/HumanWinScene.unity
-    guid: 54871ac6a986847daa703b93bfc0efb0
-  - enabled: 1
-    path: Assets/Scenes/DemonWinScene.unity
-    guid: 6b9041776637f4c23ad5b7872fbaa4ff
+    path: Assets/Scenes/Room for 4.unity
+    guid: 338eb6a59435a4dc98e5a796e3b4fecf
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Launcher.unity
+    guid: bff77b01b50254edbb6edeeaba5ae8b3
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
+      for 1.unity
+    guid: 9b8561c6e396849a5ba48c3eb9524049
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
+      for 2.unity
+    guid: 764428c63577f4580af4ce54ca9f4b1b
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
+      for 3.unity
+    guid: e07afcca5bf1a41f5bd28f498656b7b8
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
+      for 4.unity
+    guid: e7a7f9734636d415ca84ef3aaf7680f6

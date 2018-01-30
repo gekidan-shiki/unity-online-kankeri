@@ -1,67 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class GameManager : Photon.MonoBehaviour {
-	// ゲーム全体を司る変数をここで保存
-	// オーナーのみが生成。他のプレイヤーは参照するのみ。
+namespace Com.MyCompany.MyGame {
+  public class GameManager : Photon.PunBehaviour {
 
-	public bool isPlaying;
+    [Tooltip("The prefab to use for representing the player")]
+    public GameObject playerPrefab;
 
-	public bool currentIsPlaying;
-	float currentTimer;
+    static public GameManager Instance;
 
+    void Start () {
+      Instance = this;
+      if (playerPrefab == null) {
+        Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
+      } else {
+        if (PlayerManager.LocalPlayerInstance==null) {
+          Debug.Log("We are Instantiating LocalPlayer from "+SceneManagerHelper.ActiveSceneName);
+          // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+          PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+        } else {
+          Debug.Log("Ignoring scene load for "+ SceneManagerHelper.ActiveSceneName);
+        }
+      }
+    }
+    
+    void LoadArena () {
+      if (!PhotonNetwork.isMasterClient) {
+        Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
+      }
+      Debug.Log("PhotonNetwork : Loading Level : " + PhotonNetwork.room.playerCount);
+      // LoadLevel is should be called by master client.
+      PhotonNetwork.LoadLevel("Room for "+PhotonNetwork.room.playerCount);
+    }
 
-	// Object系
-	public GameObject[] players;
+    public void OnLeftRoom () {
+      SceneManager.LoadScene(0);
+    }
 
-	void Awake () {
-		isPlaying = false;
-	}
+    public void LeaveRoom () {
+      PhotonNetwork.LeaveRoom();
+    }
 
-	void Start () {
-		
-	}
+    public override void OnPhotonPlayerConnected( PhotonPlayer other ) {
+      Debug.Log("OnPhotonPlayerConnected() " + other.name);
+      if(PhotonNetwork.isMasterClient) {
+        Debug.Log("OnPhotonPlayerConnected isMasterClient " + PhotonNetwork.isMasterClient);
+        LoadArena();
+      }
+    }
 
-	void Update () {
+    public override void OnPhotonPlayerDisconnected( PhotonPlayer other ) {
+      Debug.Log("OnPhotonPlayerDisconnected() " + other.name);
+      if(PhotonNetwork.isMasterClient) {
+        Debug.Log("OnPhotonPlayerDisconnected isMasterClient " + PhotonNetwork.isMasterClient);
+        LoadArena();
+      }
+    }
 
-
-		if (photonView.isMine) {
-			if (isPlaying) {
-				
-			}
-		} else {
-			SyncValiables ();
-		}
-	}
-
-
-
-	//photonによる座標の同期
-	void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info) {
-		if (stream.isWriting) {
-			stream.SendNext (isPlaying);
-		} else {
-			currentIsPlaying = (bool)stream.ReceiveNext ();
-			currentTimer = (float)stream.ReceiveNext ();
-		}
-	}
-
-	void SyncValiables () {
-		isPlaying = currentIsPlaying;
-	}
-
-//	public void DeciedTeamFunc () {
-//		players = GameObject.FindGameObjectsWithTag ("Player");
-//
-//		for (int i = 0; i < players.Length; i++) {
-//			if () {
-//				players [i].GetComponent<StatusScript> ().myPlayerSide = "Demon";
-//			} else {
-//				players [i].GetComponent<StatusScript> ().myPlayerSide = "Human";
-//			}
-//		}
-//	}
-
+  }
 }
