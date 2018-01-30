@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 namespace Com.MyCompany.MyGame {
   public class PlayerManager : Photon.MonoBehaviour {
 
+    [Tooltip("The Beams GameObject to control")]
+    public GameObject Beams;
+
     [Tooltip("The Player's UI GameObject Prefab")]
     public GameObject PlayerUiPrefab;
 
@@ -15,12 +18,22 @@ namespace Com.MyCompany.MyGame {
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
+    //True, when the user is firing
+    bool IsFiring;
+
     public void Awake() {
 
       if (photonView.isMine) {
         LocalPlayerInstance = gameObject;
       }
       DontDestroyOnLoad(gameObject);
+
+      if (Beams==null)
+      {
+        Debug.LogError("<Color=Red><a>Missing</a></Color> Beams Reference.",this);
+      }else{
+        Beams.SetActive(false);
+      }
     }
    
 
@@ -52,6 +65,13 @@ namespace Com.MyCompany.MyGame {
         if (this.playerHealth <= 0f) {
           GameManager.Instance.LeaveRoom();
         }
+      }
+
+      ProcessInputs ();
+
+      // trigger Beams active state
+      if (Beams!=null && IsFiring != Beams.GetActive ()) {
+        Beams.SetActive(IsFiring);
       }
     }
         
@@ -86,6 +106,23 @@ namespace Com.MyCompany.MyGame {
 
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode) {
       this.CalledOnLevelWasLoaded(scene.buildIndex);
+    }
+
+    void ProcessInputs() {
+
+      if (Input.GetButtonDown ("Fire1") ) {
+        if (!IsFiring)
+        {
+          IsFiring = true;
+        }
+      }
+
+      if (Input.GetButtonUp ("Fire1") ) {
+        if (IsFiring)
+        {
+          IsFiring = false;
+        }
+      }
     }
   }
 }
