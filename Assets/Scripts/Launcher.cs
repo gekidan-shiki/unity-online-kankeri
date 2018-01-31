@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 namespace Com.MyCompany.MyGame {
@@ -42,6 +43,7 @@ namespace Com.MyCompany.MyGame {
       } else {
         // start of connecting NetWork
         PhotonNetwork.ConnectUsingSettings(_gameVersion);
+        SceneManager.LoadScene ("Lobby");
       }
     }
 
