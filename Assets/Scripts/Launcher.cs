@@ -39,7 +39,7 @@ namespace Com.MyCompany.MyGame {
       progressLabel.SetActive(true);
       controlPanel.SetActive(false);
       if (PhotonNetwork.connected) {
-        PhotonNetwork.JoinRandomRoom();
+        SceneManager.LoadScene ("Lobby");
       } else {
         // start of connecting NetWork
         PhotonNetwork.ConnectUsingSettings(_gameVersion);

@@ -67,7 +67,7 @@ namespace Com.MyCompany.MyGame {
     }
 
     public override void OnCreatedRoom() {
-      PhotonNetwork.LoadLevel("Room for 2");
+      PhotonNetwork.LoadLevel("Room for 1");
     }
   }
 }
