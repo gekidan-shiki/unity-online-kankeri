@@ -21,7 +21,7 @@ namespace Com.MyCompany.MyGame {
 
     void Awake () {
       PhotonNetwork.logLevel = Loglevel;
-      PhotonNetwork.autoJoinLobby = false;
+      PhotonNetwork.autoJoinLobby = true;
       PhotonNetwork.automaticallySyncScene = true;
     }
 
