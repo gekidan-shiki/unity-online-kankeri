@@ -20,9 +20,9 @@ namespace Com.MyCompany.MyGame {
     bool isConnecting;
 
     void Awake () {
-      PhotonNetwork.logLevel = Loglevel;
-      PhotonNetwork.autoJoinLobby = false;
-      PhotonNetwork.automaticallySyncScene = true;
+//      PhotonNetwork.logLevel = Loglevel;
+//      PhotonNetwork.autoJoinLobby = false;
+//      PhotonNetwork.automaticallySyncScene = true;
     }
 
     void Start () {
@@ -40,19 +40,21 @@ namespace Com.MyCompany.MyGame {
       controlPanel.SetActive(false);
       if (PhotonNetwork.connected) {
         SceneManager.LoadScene ("Lobby");
+        PhotonNetwork.JoinLobby ();
       } else {
         // start of connecting NetWork
         PhotonNetwork.ConnectUsingSettings(_gameVersion);
         SceneManager.LoadScene ("Lobby");
+        PhotonNetwork.JoinLobby ();
       }
     }
 
-    public override void OnConnectedToMaster () {
-      Debug.Log("OnConnectedToMaster() was called by PUN");
-      if (isConnecting) {
-        PhotonNetwork.JoinRandomRoom();
-      }
-    }
+//    public override void OnConnectedToMaster () {
+//      Debug.Log("OnConnectedToMaster() was called by PUN");
+//      if (isConnecting) {
+//        PhotonNetwork.JoinRandomRoom();
+//      }
+//    }
 
     public override void OnDisconnectedFromPhoton () {
       progressLabel.SetActive(false);
@@ -65,12 +67,12 @@ namespace Com.MyCompany.MyGame {
       PhotonNetwork.CreateRoom(null, new RoomOptions() { maxPlayers = MaxPlayersPerRoom }, null);
     }
 
-    public override void OnJoinedRoom () {
-      Debug.Log("OnJoinedRoom() was called by PUN. Now this client is in a room");
-      if (PhotonNetwork.room.playerCount == 1) {
-        Debug.Log("We load the 'Room for 1'");
-        PhotonNetwork.LoadLevel("Room for 1");
-      }
-    }
+//    public override void OnJoinedRoom () {
+//      Debug.Log("OnJoinedRoom() was called by PUN. Now this client is in a room");
+//      if (PhotonNetwork.room.playerCount == 1) {
+//        Debug.Log("We load the 'Room for 1'");
+//        PhotonNetwork.LoadLevel("Room for 1");
+//      }
+//    }
   }
 }

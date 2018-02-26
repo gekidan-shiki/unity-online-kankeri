@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Com.MyCompany.MyGame {
@@ -18,18 +19,22 @@ namespace Com.MyCompany.MyGame {
     }
 
     void Start () {
-      GetRooms ();
+      Debug.Log("ロビーマネジャー");
     }
 
 
     void Update () {
-
+      if(Input.GetKeyDown("r")) {
+        GetRooms ();
+      }
     }
 
     public void GetRooms() {
       RoomInfo[] roomInfo = PhotonNetwork.GetRoomList ();
+      Debug.Log ("おせちんこ");
 
       if (roomInfo == null || roomInfo.Length == 0) {
+        Debug.Log ("ポコチン");
         return;
       }
 
@@ -40,6 +45,9 @@ namespace Com.MyCompany.MyGame {
         RoomElement.transform.SetParent (RoomParent.transform);
         RoomElement.GetComponent<RoomElementScript> ().SetRoomInfo (roomInfo [i].Name, roomInfo [i].PlayerCount, roomInfo [i].MaxPlayers, roomInfo [i].CustomProperties ["RoomCreator"].ToString ());
       }
+
+      Debug.Log (roomInfo.Length);
+      Debug.Log ("ちんこ");
     }
 
     public static void DestroyChildObject(Transform parent_trans) {
@@ -51,6 +59,7 @@ namespace Com.MyCompany.MyGame {
     public override void OnReceivedRoomListUpdate() {
       DestroyChildObject (RoomParent.transform);
       GetRooms ();
+      Debug.Log ("更新");
     }
 
     public override void OnPhotonCreateRoomFailed(object[] codeAndMsg) {

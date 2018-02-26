@@ -26,6 +26,10 @@ namespace Com.MyCompany.MyGame {
       }
     }
 
+    void Update () {
+      Debug.Log (PhotonNetwork.connectionStateDetailed);
+    }
+
     public void OnLeftRoom () {
       SceneManager.LoadScene(0);
     }
