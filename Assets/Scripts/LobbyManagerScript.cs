@@ -24,6 +24,8 @@ namespace Com.MyCompany.MyGame {
 
 
     void Update () {
+      Debug.Log (PhotonNetwork.connectionStateDetailed);
+
       if(Input.GetKeyDown("r")) {
         GetRooms ();
       }

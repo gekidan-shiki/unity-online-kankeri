@@ -69,7 +69,7 @@ namespace ExitGames.Demos.DemoAnimator
 
 			// #Critical
 			// we don't join the lobby. There is no need to join a lobby to get the list of rooms.
-			PhotonNetwork.autoJoinLobby = false;
+			PhotonNetwork.autoJoinLobby = true;
 
 			// #Critical
 			// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically

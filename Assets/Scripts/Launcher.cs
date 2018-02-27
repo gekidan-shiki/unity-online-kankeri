@@ -20,9 +20,10 @@ namespace Com.MyCompany.MyGame {
     bool isConnecting;
 
     void Awake () {
-//      PhotonNetwork.logLevel = Loglevel;
-//      PhotonNetwork.autoJoinLobby = false;
-//      PhotonNetwork.automaticallySyncScene = true;
+
+      PhotonNetwork.logLevel = Loglevel;
+      PhotonNetwork.autoJoinLobby = true;
+      PhotonNetwork.automaticallySyncScene = true;
     }
 
     void Start () {
