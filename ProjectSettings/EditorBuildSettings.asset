@@ -26,21 +26,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Launcher.unity
     guid: 2c69bcddb290147cdb260a61a1e0247e
-  - enabled: 1
-    path: Assets/Scenes/Lobby.unity
-    guid: fbcbc480f5269419194defef49ab20e1
-  - enabled: 1
-    path: Assets/Scenes/Room for 1.unity
-    guid: 08e02423569594a1b83330d3f5511386
-  - enabled: 1
-    path: Assets/Scenes/Room for 2.unity
-    guid: e2a9a4bf5ee02404298df62199f0a8e6
-  - enabled: 1
-    path: Assets/Scenes/Room for 3.unity
-    guid: 10d2bd22dc1ad478daf54ab7aef434b9
-  - enabled: 1
-    path: Assets/Scenes/Room for 4.unity
-    guid: 338eb6a59435a4dc98e5a796e3b4fecf
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Launcher.unity
     guid: bff77b01b50254edbb6edeeaba5ae8b3
@@ -60,3 +60,12 @@ EditorBuildSettings:
     path: Assets/Photon Unity Networking/Demos/PunBasics-Tutorial/Scenes/PunBasics-Room
       for 4.unity
     guid: e7a7f9734636d415ca84ef3aaf7680f6
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/GameRoom.unity
+    guid: 313ad19d30bc849ea90ba61d0e19dcc5
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/MarcoPolo-Tutorial/MarcoPolo-Scene.unity
+    guid: 4edb89b81eea36243978d62c589e60ad
